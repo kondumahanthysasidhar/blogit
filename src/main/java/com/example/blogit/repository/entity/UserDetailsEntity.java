@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import lombok.Getter;
 
 @Entity
 @Table(name = "user_details",
@@ -13,7 +14,7 @@ import lombok.Data;
                 @UniqueConstraint(columnNames = "user_name")
         })
 @Data
-
+@Getter
 public class UserDetailsEntity {
 
     @Id
@@ -41,4 +42,19 @@ public class UserDetailsEntity {
     @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
     @Column(name = "phone_number")
     public String phoneNumber;
+
+    @Column(name = "password")
+    public String password;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public @NotBlank(message = "Username is required") String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

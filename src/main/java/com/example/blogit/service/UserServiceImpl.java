@@ -6,6 +6,7 @@ import com.example.blogit.repository.UserRepository;
 import com.example.blogit.repository.entity.UserDetailsEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,9 +14,11 @@ public class UserServiceImpl implements UserService{
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private UserRepository userRepository;
     private UserDetailsMapper userDetailsMapper;
-    UserServiceImpl(UserRepository userRepository, UserDetailsMapper userDetailsMapper){
+    private PasswordEncoder passwordEncoder;
+    UserServiceImpl(UserRepository userRepository, UserDetailsMapper userDetailsMapper, PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.userDetailsMapper = userDetailsMapper;
+        this.passwordEncoder = passwordEncoder;
     }
     @Override
     public UserDetails getUserDetails(String userName) {
@@ -26,6 +29,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void createUser(final UserDetails userDetails){
+        userDetails.setPassword(passwordEncoder.encode(userDetails.getPassword()));
         UserDetailsEntity userDetailsEntity = userDetailsMapper.toUserDetailEntity(userDetails);
         userRepository.save(userDetailsEntity);
     }

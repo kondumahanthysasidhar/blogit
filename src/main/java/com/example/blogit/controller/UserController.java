@@ -29,7 +29,7 @@ public class UserController {
 
     }
 
-    @PostMapping(value = "/blogit/userdetails/")
+    @PostMapping(value = "/blogit/userdetails/create")
     private Object createUserDetails(@RequestBody final UserDetails userDetails){
         logger.info("in Post UserDetails");
         userService.createUser(userDetails);

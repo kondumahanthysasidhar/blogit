@@ -16,4 +16,10 @@ public class UserDetails {
     public String userName;
 
     public String phoneNumber;
+
+    public String password;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
